@@ -12,6 +12,7 @@ public class Display {
         //jframe.setDefaultCloseOperation(
         //    JFrame.EXIT_ON_CLOSE);
         jframe.add(loadImage("img/pet/Cat1.jpg"));
+        jframe.add(loadImage("img/pet/Cat2.jpg"));
         jframe.setVisible(true);
     }
     public static JLabel loadImage(String fileName) {
