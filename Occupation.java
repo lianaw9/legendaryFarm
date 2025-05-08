@@ -1,7 +1,8 @@
 public class Occupation {
     private String jobTitle; 
-    public Occupation(String j) {
-        jobTitle = j;
+
+    public Occupation() {
+        
     }
-    public String getJobTitle() {return jobTitle;}
+    public String getJobTitle() {return "UNPAID INTERN";}
 }
