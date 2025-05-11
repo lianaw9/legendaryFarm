@@ -15,7 +15,19 @@ public class Occupation {
 
     public Occupation() {
         job = jobList[(int)(Math.random()*jobList.length)];
-        jobTitle = job[0];
+        jobTitle = "Orphan";
     }
     public String getJobTitle() {return jobTitle;}
+    public String getDreamJob() {return job[0];}
+
+    //returns true if graduated to top level, returns false otherwise
+    public boolean promotion() {
+        if (jobTitle.equals("Orphan")) {
+            jobTitle = job[1];
+            return false;
+        } else {
+            jobTitle = job[0];
+            return true;
+        }
+    }
 }

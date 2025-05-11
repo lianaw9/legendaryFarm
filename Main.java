@@ -8,5 +8,12 @@ public class Main {
         Pet pet2 = new Pet();
         pet2.setName("SUPER FENT WARRIOR");
         System.out.println(pet2);
+
+        for (int i=1; i<=10; i++) {
+            pet2.levelUp();
+            pet2.modifyHunger(-10);
+            System.out.println("LOOP #" + i);
+            System.out.println(pet2);
+        }
     }
 }
