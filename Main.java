@@ -1,5 +1,7 @@
 public class Main {
     public static void main(String[] args) {
+        Player player = new Player();
+
         Pet pet1 = new Pet();
         System.out.println(pet1.getName());
         pet1.setName("Prometheus");
@@ -9,11 +11,13 @@ public class Main {
         pet2.setName("SUPER FENT WARRIOR");
         System.out.println(pet2);
 
+        player.AddPet(pet1);
+        player.AddPet(pet2);
+
         for (int i=1; i<=10; i++) {
-            pet2.levelUp();
-            pet2.modifyHunger(-10);
-            System.out.println("LOOP #" + i);
-            System.out.println(pet2);
+            player.IncrementTimeScale();
+            System.out.println(player.GetTimeScale());
+            player.updatePetHunger();
         }
     }
 }
