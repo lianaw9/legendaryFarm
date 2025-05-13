@@ -110,7 +110,8 @@ class Player {
             }
 
             if (isFinished) {
-                System.out.println("Congrats");
+                System.out.println("Congrats, you earned " + sTask.GetCoinAmount() + "! you now have " + totalCoins + " coins.");
+                this.totalCoins += sTask.GetCoinAmount();
                 SetCompletedTasks(sTask);
 
                 System.out.println("What pet do you want to feed? ");
@@ -123,10 +124,32 @@ class Player {
             System.out.println("Do you want to: (1) buy a pet, (2) create a new task, or (3) quit?");
             int choice = scan.nextInt();
 
-            if (choice == 1) {
+            if (choice == 1 && totalCoins > 100) {
+                totalCoins -= 100;
+                Pet newPet = new Pet();
+                System.out.println("What do you want to name your pet? ");
+                String petName = scan.nextLine();
 
+                newPet.setName(petName);
+                this.AddPet(newPet);
+                System.out.println("Congrats, you now have " + petName + " joining the team!");
+                System.out.println(newPet);
             } else if (choice == 2) {
-                
+                System.out.println("What is the new Task you want to add? ");
+                String taskName = scan.nextLine();
+
+                System.out.println("What is a brief description of " + taskName + "? ");
+                String taskDescription = scan.nextLine();
+
+                System.out.println("How much will it feed your pets? ");
+                int taskFoodDelta = scan.nextInt();
+
+                System.out.println("How much will you earn upon completion? ");
+                int taskMoneyEarned = scan.nextInt();
+
+                Task newTask = new Task(taskName, taskDescription, taskFoodDelta, taskMoneyEarned);
+                this.AddTask(newTask);
+
             }
         }
     }
