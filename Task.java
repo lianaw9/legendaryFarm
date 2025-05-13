@@ -45,4 +45,15 @@ public class Task {
         return isComplete;
     }
 
+    @Override
+    public boolean equals(Object otherObj) {
+        Task otherTask = (Task) otherObj;
+        
+        if (otherTask.GetName().equals(this.GetName()) && otherTask.GetDescription().equals(this.GetDescription())) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

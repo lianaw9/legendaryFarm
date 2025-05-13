@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Player {
     private ArrayList<Pet> pets;
@@ -38,6 +39,22 @@ class Player {
         tasks.add(newTask);
     }
 
+    public void SetCompletedTasks(Task task) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).equals(task)) {
+                tasks.get(i).SetComplete(true); // remove if not important
+                tasks.remove(i);
+            }
+        }
+    }
+
+    public Task PickTask() {
+        int randomTaskIndex = (int) (Math.random() * tasks.size());
+        Task selectedTask = tasks.get(randomTaskIndex);
+
+        return selectedTask;
+    }
+
     public void AddPet(Pet newPet) {
         pets.add(newPet);
     }
@@ -50,11 +67,66 @@ class Player {
         return timeScale;
     }
 
-    public void updatePetHunger() {
+    public void UpdatePetHunger(int foodDelta) {
         if (GetTimeScale() % updateHungerScale == 0) {
             for (int i = 0; i < pets.size(); i++) {
-                pets.get(i).modifyHunger(-10);
+                pets.get(i).modifyHunger(foodDelta);
                 System.out.println(pets.get(i));
+            }
+        }
+    }
+
+    public void UpdateSpecificPetHunger(String chosenPet, int foodDelta) {
+        boolean petExists = false;
+        for(int i = 0; i < pets.size(); i++) {
+            if(pets.get(i).getName().equals(chosenPet)) {
+                pets.get(i).modifyHunger(foodDelta);
+                System.out.println(pets.get(i));
+                petExists = true;
+            }
+        }
+
+        if(!petExists) {
+            System.out.println("That pet doesn't exist");
+        }
+    }
+
+    public void UpdateTask() {
+        if (GetTimeScale() % (updateHungerScale + (int) (Math.random() * 3)) == 0 && (int)(Math.random() * 2) == 1) {
+            Task sTask = PickTask();
+
+            System.out.println("Remember, " + sTask.GetName() + "! ");
+            System.out.println("If you forgot," + sTask.GetName() + " is about: " + sTask.GetDescription());
+            System.out.println("Did you complete the task(y/n)?");
+
+            boolean isFinished = false;
+
+            Scanner scan = new Scanner(System.in);
+
+            String unfilteredText = scan.nextLine();
+
+            if (unfilteredText.equals("y")) {
+                isFinished = true;
+            }
+
+            if (isFinished) {
+                System.out.println("Congrats");
+                SetCompletedTasks(sTask);
+
+                System.out.println("What pet do you want to feed? ");
+                String petName = scan.nextLine();
+
+                UpdateSpecificPetHunger(petName, sTask.GetFoodAmount());
+
+            }
+
+            System.out.println("Do you want to: (1) buy a pet, (2) create a new task, or (3) quit?");
+            int choice = scan.nextInt();
+
+            if (choice == 1) {
+
+            } else if (choice == 2) {
+                
             }
         }
     }
