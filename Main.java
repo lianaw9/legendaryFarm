@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 public class Main {
     public static void main(String[] args) {
         Player player = new Player();
@@ -10,6 +12,7 @@ public class Main {
         Pet pet2 = new Pet();
         pet2.setName("SUPER FENT WARRIOR");
         System.out.println(pet2);
+
 
         player.AddPet(pet1);
         player.AddPet(pet2);
