@@ -71,7 +71,7 @@ public class Display {
     }
 
     private static int column = 1;
-    public static void loadPetDisplay(Pet pet) {
+    public static void loadPetDisplay(Pet pet, int xpos, int ypos) {
         int width = 200;
         int height = 200;
         try{
@@ -84,16 +84,16 @@ public class Display {
 
             JLabel petImg = new JLabel();
             petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(x, y, width, height);
+            petImg.setBounds(xpos, ypos, width, height);
             System.out.println(); // ID ONT KNOW WHY IT ONLY WORKS WITH THIS PRNT STTEMNT HERE
             jframe.add(petImg);
             if (column == 3) {
-                y += height + 100;
-                x = 0;
+                // y += height + 100;
+                // x = 0;
                 column = 1;
                 System.out.println("CONDITION 1");
             } else {
-                x += width + 20;
+                //x += width + 20;
                 column++;
                 System.out.println("CONDITION 2");
             }
@@ -101,7 +101,7 @@ public class Display {
             for (int i=0; i<pet.infoArray().length; i++) {
                 System.out.println(pet.infoArray()[i]);
                 JLabel petInfo = new JLabel(pet.infoArray()[i]);
-                petInfo.setBounds(x, y+200+i*10, 200, 30);
+                petInfo.setBounds(xpos, ypos+40+i*10, 200, 200);
                 jframe.add(petInfo);
             }
 
