@@ -7,7 +7,7 @@ public class Occupation {
         {"Demolitions Expert", "Casual Demolisher"},
         {"Historian", "Bookworm"},
         {"Feudal Lord", "Peasant"},
-        {"Sargeant", "Soldier"},
+        {"Sergeant", "Soldier"},
         {"Master Chef", "Cook"}
     };
     private String[] job; 
