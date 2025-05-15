@@ -1,4 +1,3 @@
-import javax.swing.JFrame;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +18,8 @@ public class Main {
         System.out.println(pet3);
 
         Display.loadPetDisplay(pet3);
+
+        Display.initMainDisplay();
 
         // player.AddPet(pet1);
         // player.AddPet(pet2);

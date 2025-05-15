@@ -1,8 +1,8 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Display {
     public static void main(String[] args) {
@@ -28,6 +28,32 @@ public class Display {
             System.out.println("Error: " + e);
             return null;
         }
+    }
+
+    public static void initMainDisplay() {
+        JFrame frame = new JFrame("Main Display");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(700, 700);
+        frame.setLayout(null);
+
+        // create buttons
+        JButton buyPet = createButton("buy a pet", 10, 10, 100, 200);
+        JButton createTask = createButton("create task", 100, 100, 200, 400);     
+        frame.add(buyPet);
+        frame.add(createTask);
+
+        // listeners
+        buyPet.addActionListener(e -> {
+            System.out.println("buy pet clicked");
+        });
+        createTask.addActionListener(e -> {
+            System.out.println("create task clicked");
+            AnswerBox box = new AnswerBox("Task name?");
+            // need to add a way to get the text from answer box once it's submitted without halting everythin else
+        });
+
+        frame.setVisible(true);
+
     }
 
     //SORRY I was messing around with this method since i added some sprites -LIANA
@@ -78,5 +104,21 @@ public class Display {
         g.dispose();
         return resizedImage;
     }
+
+    public static JButton createButton(String text, int xpos, int ypos, int width, int height) {
+        JButton button = new JButton(text);
+        button.setLocation(xpos, ypos); // Set position
+        button.setSize(width, height); // Set size
+
+        return  button;
+    }
+
+    public static JButton createButton(String text) {
+        JButton button = new JButton(text);
+        //default size/pos
+
+        return  button;
+    }
+
 
 }
