@@ -34,6 +34,8 @@ class Player {
 
 
     }
+    public String getName() {return name;}
+    public void setName(String newName) {name = newName;}
 
     public void AddTask(Task newTask) {
         tasks.add(newTask);
@@ -126,7 +128,7 @@ class Player {
 
             if (choice == 1 && totalCoins > 100) {
                 totalCoins -= 100;
-                Pet newPet = new Pet();
+                Pet newPet = new Pet(name);
                 System.out.println("What do you want to name your pet? ");
                 String petName = scan.nextLine();
 

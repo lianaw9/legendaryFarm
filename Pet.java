@@ -1,4 +1,10 @@
 /* Generates animal with desired occupatation */
+
+import java.io.File;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.*;
+
 public class Pet {
     private String[] speciesList = {
         "Dog", "Cat", "Parrot", "Hamster", "Snake", "Lizard"
@@ -6,9 +12,10 @@ public class Pet {
 
     //Private instance variables - general info (will not be changed)
     private String species;
-    private int variation; //different colors/appearances per species (will have 3 types but there are only 2 rn)
+    private int variation; //different colors/appearances per species (3 types)
     private Occupation occupation;
     private String img;
+    private String owner;
 
     //Private instance variable - health info (can be changed)
     private String name;
@@ -19,14 +26,29 @@ public class Pet {
 
     private static int petNum = 0; //keeps track of total number of ppets
 
-    public Pet() {
+    public Pet(String ownerName) {
         petNum++;
 
         name = "Pet #" + petNum;
         species = speciesList[(int)(Math.random()*speciesList.length)];
-        variation = (int)(Math.random()*2) +1;
+        variation = (int)(Math.random()*3) +1;
         occupation = new Occupation();
-        img = "img/pet/" + species + variation + ".jpg";
+        owner = ownerName;
+        //creates an image combining species and occupation and puts it in playerpets under the player's name
+        try {
+            BufferedImage backgroundImage = ImageIO.read(new File("img/pet/" + species + variation + ".png"));
+            BufferedImage overlayImage = ImageIO.read(new File("img/occupation/" + occupation.getDreamJob() + ".png"));
+            Graphics2D g2d = backgroundImage.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.drawImage(overlayImage, 0, 0, null);
+            g2d.dispose();
+
+            ImageIO.write(backgroundImage, "png", new File("img/playerpets/" + owner + "_" + name + ".png"));
+            img = "img/playerpets/" + owner + "_" + name + ".png";
+        } catch (Exception e) {
+            System.out.println("Error occured.");
+            img = "img/pet/" + species + variation + ".png";
+        }
 
         level = 0;
         hunger = 100;
