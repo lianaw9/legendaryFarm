@@ -36,6 +36,7 @@ class Player {
     }
     public String getName() {return name;}
     public void setName(String newName) {name = newName;}
+    public ArrayList<Pet> getPets() {return pets;}
 
     public void AddTask(Task newTask) {
         tasks.add(newTask);

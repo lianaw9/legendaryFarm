@@ -57,41 +57,61 @@ public class Display {
     }
 
     //SORRY I was messing around with this method since i added some sprites -LIANA
+    private static JFrame jframe;
+    private static int x;
+    private static int y;
+
+    public static void initPetDisplay() {
+        jframe = new JFrame("PetInfo");
+        x = 0;
+        y = 0;
+        jframe.setLayout(new BorderLayout());
+        jframe.setSize(700, 700);
+        jframe.setVisible(true);
+    }
+
+    private static int column = 1;
     public static void loadPetDisplay(Pet pet) {
-        JFrame jframe = new JFrame("PetInfo");
-        
-        int width = 0;
-        int height = 0;
+        int width = 200;
+        int height = 200;
         try{
             BufferedImage bimg = ImageIO.read(new File(pet.getImage()));
-            width = bimg.getWidth()/2;
-            height = bimg.getHeight()/2;
             bimg = resize(bimg, 200, 200);
 
-            
-            //jframe.setLayout(new BorderLayout());
-            jframe.setSize(700, 400);
             //jframe.setDefaultCloseOperation(
             //    JFrame.EXIT_ON_CLOSE);
+            
 
-            //JLabel petImg = loadImage(pet.getImage());
             JLabel petImg = new JLabel();
             petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(jframe.getWidth()/2 - (width/2), 50, width, height); // auto place image in top center
+            petImg.setBounds(x, y, width, height);
+            System.out.println(); // ID ONT KNOW WHY IT ONLY WORKS WITH THIS PRNT STTEMNT HERE
             jframe.add(petImg);
+            if (column == 3) {
+                y += height + 100;
+                x = 0;
+                column = 1;
+                System.out.println("CONDITION 1");
+            } else {
+                x += width + 20;
+                column++;
+                System.out.println("CONDITION 2");
+            }
 
-            JLabel petInfo = new JLabel(pet.toString()); // format is odd in jlabel for some reason
+            for (int i=0; i<pet.infoArray().length; i++) {
+                System.out.println(pet.infoArray()[i]);
+                JLabel petInfo = new JLabel(pet.infoArray()[i]);
+                petInfo.setBounds(x, y+200+i*10, 200, 30);
+                jframe.add(petInfo);
+            }
+
+            
+            //JLabel petInfo = new JLabel(pet.toString()); // format is odd in jlabel for some reason
             //petInfo.setBounds(jframe.getWidth()/2, 0, 300, 80); why doesn't this work?
-            jframe.add(petInfo);
-
-
-
+            //jframe.add(petInfo);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-        
-
-
         jframe.setVisible(true);
     }
 

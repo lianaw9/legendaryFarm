@@ -3,23 +3,17 @@ public class Main {
     public static void main(String[] args) {
         Player player = new Player();
         player.setName("John");
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
 
-        Pet pet1 = new Pet(player.getName());
-        System.out.println(pet1.getName());
-        pet1.setName("Prometheus");
-        System.out.println(pet1);
+        Display.initPetDisplay();
+        for (Pet p : player.getPets()) {
+            Display.loadPetDisplay(p);
+        }
 
-        Pet pet2 = new Pet(player.getName());
-        pet2.setName("SUPER FENT WARRIOR");
-        System.out.println(pet2);
-
-        Pet pet3 = new Pet(player.getName());
-        pet3.setName("Painter");
-        System.out.println(pet3);
-
-        Display.loadPetDisplay(pet3);
-
-        Display.initMainDisplay();
+        //Display.initMainDisplay();
 
         // player.AddPet(pet1);
         // player.AddPet(pet2);

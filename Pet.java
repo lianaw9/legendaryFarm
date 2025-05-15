@@ -112,4 +112,13 @@ public class Pet {
 
     }
 
+    public String[] infoArray() {
+        String[] info = new String[4];
+        info[0]= "NAME: " + name;
+        info[1] = "CURRENTLY: " + occupation.getJobTitle();
+        info[2] = "LEVEL: " + level;
+        info[3] = "HUNGER: " + hunger;
+        return info;
+    }
+
 }
