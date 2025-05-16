@@ -58,8 +58,6 @@ public class Display {
 
     //SORRY I was messing around with this method since i added some sprites -LIANA
     private static JFrame jframe;
-    private static int x =0;
-    private static int y =0;
     
     //store pet locations
     private static int[][] slots = {{0, 0}, {220, 0}, {440, 0}, {0, 300}, {220, 300}, {440, 300}};
@@ -112,7 +110,7 @@ public class Display {
                 button.setSize(200, 20); // Set size
                 button.addActionListener(e -> {
                     AnswerBox box = new AnswerBox(" ");
-                    pet.setName(box.getText());// need to add a way to get the text from answer box once it's submitted without halting everythin else
+                    pet.setName(box.getText());// needs a way to refresh the whole display somehow (sob)(sob)
                 });
                 jframe.add(button);
             }
@@ -124,10 +122,6 @@ public class Display {
         jframe.repaint();    // tells Swing to repaint the UI
 
         jframe.setVisible(true);
-    }
-
-    private static void writePetInfo() {
-        
     }
 
     public static void test() {

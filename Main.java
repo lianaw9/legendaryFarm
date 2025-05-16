@@ -7,8 +7,8 @@ public class Main {
         player.AddPet(new Pet(player.getName()));
         player.AddPet(new Pet(player.getName()));
         player.AddPet(new Pet(player.getName()));
-        player.AddPet(new Pet(player.getName()));
-        player.AddPet(new Pet(player.getName()));
+        // player.AddPet(new Pet(player.getName()));
+        // player.AddPet(new Pet(player.getName()));
 
         Display.initPetDisplay();
         //Display.test();
