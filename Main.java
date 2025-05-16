@@ -4,9 +4,11 @@ public class Main {
         Player player = new Player();
         player.setName("John");
         player.AddPet(new Pet(player.getName()));
-        //player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
 
         Display.initPetDisplay();
         //Display.test();

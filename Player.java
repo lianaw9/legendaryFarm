@@ -7,6 +7,7 @@ class Player {
 
     private String name;
     private int totalCoins;
+    private int max = 6; //maximum number of pets
 
     private int timeScale;
     private int updateHungerScale = 5;
@@ -59,7 +60,9 @@ class Player {
     }
 
     public void AddPet(Pet newPet) {
-        pets.add(newPet);
+        if (pets.size() < max) {
+            pets.add(newPet);
+        }
     }
 
     public void IncrementTimeScale() {
@@ -128,15 +131,20 @@ class Player {
             int choice = scan.nextInt();
 
             if (choice == 1 && totalCoins > 100) {
-                totalCoins -= 100;
-                Pet newPet = new Pet(name);
-                System.out.println("What do you want to name your pet? ");
-                String petName = scan.nextLine();
+                if (pets.size() < max) {
+                    totalCoins -= 100;
+                    Pet newPet = new Pet(name);
+                    System.out.println("What do you want to name your pet? ");
+                    String petName = scan.nextLine();
 
-                newPet.setName(petName);
-                this.AddPet(newPet);
-                System.out.println("Congrats, you now have " + petName + " joining the team!");
-                System.out.println(newPet);
+                    newPet.setName(petName);
+                    this.AddPet(newPet);
+                    System.out.println("Congrats, you now have " + petName + " joining the team!");
+                    System.out.println(newPet);
+                } else {
+                    System.out.println("Not enough space for a new pet");
+                }
+                
             } else if (choice == 2) {
                 System.out.println("What is the new Task you want to add? ");
                 String taskName = scan.nextLine();

@@ -72,10 +72,11 @@ public class Display {
         jframe.setVisible(true);
     }
 
-    private static int column = 1;
+    /*PRECONDITION:  */
     public static void loadPetDisplay(Pet pet) {
-        int width = 200;
-        int height = 200;
+        boolean canLoad = false;
+        int x = 0;
+        int y = 0;
         try{
             BufferedImage bimg = ImageIO.read(new File(pet.getImage()));
             bimg = resize(bimg, 200, 200);
@@ -88,46 +89,45 @@ public class Display {
                     x = slots[i][0];
                     y= slots[i][1];
                     petSlots[i] = pet;
+                    canLoad = true;
                     break;
-                } else {
-                    System.out.println("Error: No available location for this pet");
-                }
+                } 
             }
             System.out.println(x + " " + y);
-
-            JLabel petImg = new JLabel();
-            petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(x, y, 200, 200);
-            System.out.println(); // ID ONT KNOW WHY IT ONLY WORKS WITH THIS PRNT STTEMNT HERE
-            jframe.add(petImg);
-
-
-            // if (column == 3) {
-            //     y += height + 100;
-            //     x = 0;
-            //     column = 1;
-            //     System.out.println("CONDITION 1");
-            // } else {
-            //     x += width + 20;
-            //     column++;
-            //     System.out.println("CONDITION 2");
-            // }
-
-            for (int i=0; i<pet.infoArray().length; i++) {
-                System.out.println(pet.infoArray()[i]);
-                JLabel petInfo = new JLabel(pet.infoArray()[i]);
-                petInfo.setBounds(x, y+100+i*10, 200, 200);
-                jframe.add(petInfo);
-            }
-
             
-            //JLabel petInfo = new JLabel(pet.toString()); // format is odd in jlabel for some reason
-            //petInfo.setBounds(jframe.getWidth()/2, 0, 300, 80); why doesn't this work?
-            //jframe.add(petInfo);
+            if (canLoad) {
+                JLabel petImg = new JLabel();
+                petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
+                petImg.setBounds(x, y, 200, 200);
+                jframe.add(petImg);
+
+                for (int i=0; i<pet.infoArray().length; i++) {
+                    System.out.println(pet.infoArray()[i]);
+                    JLabel petInfo = new JLabel(pet.infoArray()[i]);
+                    petInfo.setBounds(x, y+100+i*10, 200, 200);
+                    jframe.add(petInfo);
+                }
+                JButton button = new JButton("Change name");
+                button.setLocation(x, y+260); // Set position
+                button.setSize(200, 20); // Set size
+                button.addActionListener(e -> {
+                    AnswerBox box = new AnswerBox(" ");
+                    pet.setName(box.getText());// need to add a way to get the text from answer box once it's submitted without halting everythin else
+                });
+                jframe.add(button);
+            }
+            
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
+        jframe.revalidate(); // tells Swing to recalculate layout
+        jframe.repaint();    // tells Swing to repaint the UI
+
         jframe.setVisible(true);
+    }
+
+    private static void writePetInfo() {
+        
     }
 
     public static void test() {
@@ -135,7 +135,7 @@ public class Display {
             BufferedImage img = ImageIO.read(new File("img/playerpets/placeholder.png"));
             JLabel petImg = new JLabel();
             petImg.setIcon(new ImageIcon(img)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(0, 0, 200, 200);
+            petImg.setBounds(220, 0, 200, 200);
             jframe.add(petImg);
             jframe.setVisible(true);
             
