@@ -48,8 +48,7 @@ public class Display {
         });
         createTask.addActionListener(e -> {
             System.out.println("create task clicked");
-            AnswerBox box = new AnswerBox("Task name?");
-            // need to add a way to get the text from answer box once it's submitted without halting everythin else
+            AnswerBox box = new AnswerBox("Task name?", new Task());
         });
 
         frame.setVisible(true);
@@ -105,12 +104,9 @@ public class Display {
                     petInfo.setBounds(x, y+100+i*10, 200, 200);
                     jframe.add(petInfo);
                 }
-                JButton button = new JButton("Change name");
-                button.setLocation(x, y+260); // Set position
-                button.setSize(200, 20); // Set size
-                button.addActionListener(e -> {
-                    AnswerBox box = new AnswerBox(" ");
-                    pet.setName(box.getText());// needs a way to refresh the whole display somehow (sob)(sob)
+                JButton button = createButton("Change Name", x, y+260, 200, 20);
+                button.addActionListener(e -> { // set to new name
+                    AnswerBox box = new AnswerBox(" ", pet);  
                 });
                 jframe.add(button);
             }
@@ -122,6 +118,20 @@ public class Display {
         jframe.repaint();    // tells Swing to repaint the UI
 
         jframe.setVisible(true);
+        x = 0;
+        y = 0;
+    }
+
+    public static void reloadPetDisplay() {
+        Pet[] holder = petSlots;
+        petSlots = new Pet[6];
+        
+        jframe.getContentPane().removeAll();
+        int counter = 0;
+        for (Pet p : holder) {
+            loadPetDisplay(p);
+            counter++;
+        }
     }
 
     public static void test() {
@@ -161,6 +171,10 @@ public class Display {
         //default size/pos
 
         return  button;
+    }
+
+    public static Pet[] getPets() { // probably a better way to do this but whateverrr, used to reload all the pets from AnswerBox
+        return petSlots;
     }
 
 
