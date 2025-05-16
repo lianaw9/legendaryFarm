@@ -4,13 +4,15 @@ public class Main {
         Player player = new Player();
         player.setName("John");
         player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
+        //player.AddPet(new Pet(player.getName()));
         // player.AddPet(new Pet(player.getName()));
         // player.AddPet(new Pet(player.getName()));
 
         Display.initPetDisplay();
+        //Display.test();
+        System.out.println(player.getPets().size());
         for (Pet p : player.getPets()) {
-            Display.loadPetDisplay(p, 0, 0);
+            Display.loadPetDisplay(p);
         }
 
         //Display.initMainDisplay();

@@ -58,50 +58,65 @@ public class Display {
 
     //SORRY I was messing around with this method since i added some sprites -LIANA
     private static JFrame jframe;
-    private static int x;
-    private static int y;
+    private static int x =0;
+    private static int y =0;
+    
+    //store pet locations
+    private static int[][] slots = {{0, 0}, {220, 0}, {440, 0}, {0, 300}, {220, 300}, {440, 300}};
+    private static Pet[] petSlots = new Pet[6];
 
     public static void initPetDisplay() {
         jframe = new JFrame("PetInfo");
-        x = 0;
-        y = 0;
-        jframe.setLayout(new BorderLayout());
+        jframe.setLayout(null);
         jframe.setSize(700, 700);
         jframe.setVisible(true);
     }
 
     private static int column = 1;
-    public static void loadPetDisplay(Pet pet, int xpos, int ypos) {
+    public static void loadPetDisplay(Pet pet) {
         int width = 200;
         int height = 200;
         try{
             BufferedImage bimg = ImageIO.read(new File(pet.getImage()));
             bimg = resize(bimg, 200, 200);
+            System.out.println("HELLO");
 
             //jframe.setDefaultCloseOperation(
             //    JFrame.EXIT_ON_CLOSE);
-            
+            for (int i=0; i<petSlots.length; i++) {  
+                if (petSlots[i] == null) {
+                    x = slots[i][0];
+                    y= slots[i][1];
+                    petSlots[i] = pet;
+                    break;
+                } else {
+                    System.out.println("Error: No available location for this pet");
+                }
+            }
+            System.out.println(x + " " + y);
 
             JLabel petImg = new JLabel();
             petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(xpos, ypos, width, height);
+            petImg.setBounds(x, y, 200, 200);
             System.out.println(); // ID ONT KNOW WHY IT ONLY WORKS WITH THIS PRNT STTEMNT HERE
             jframe.add(petImg);
-            if (column == 3) {
-                // y += height + 100;
-                // x = 0;
-                column = 1;
-                System.out.println("CONDITION 1");
-            } else {
-                //x += width + 20;
-                column++;
-                System.out.println("CONDITION 2");
-            }
+
+
+            // if (column == 3) {
+            //     y += height + 100;
+            //     x = 0;
+            //     column = 1;
+            //     System.out.println("CONDITION 1");
+            // } else {
+            //     x += width + 20;
+            //     column++;
+            //     System.out.println("CONDITION 2");
+            // }
 
             for (int i=0; i<pet.infoArray().length; i++) {
                 System.out.println(pet.infoArray()[i]);
                 JLabel petInfo = new JLabel(pet.infoArray()[i]);
-                petInfo.setBounds(xpos, ypos+40+i*10, 200, 200);
+                petInfo.setBounds(x, y+100+i*10, 200, 200);
                 jframe.add(petInfo);
             }
 
@@ -115,6 +130,20 @@ public class Display {
         jframe.setVisible(true);
     }
 
+    public static void test() {
+        try {
+            BufferedImage img = ImageIO.read(new File("img/playerpets/placeholder.png"));
+            JLabel petImg = new JLabel();
+            petImg.setIcon(new ImageIcon(img)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
+            petImg.setBounds(0, 0, 200, 200);
+            jframe.add(petImg);
+            jframe.setVisible(true);
+            
+        } catch (Exception e) {
+            System.out.println("EROR");
+        }
+        
+    }
     //bro i 100% just copy and paste from gogle ai 
     private static BufferedImage resize(BufferedImage og, int w, int h) {
         BufferedImage resizedImage = new BufferedImage(w, h, og.getType());
