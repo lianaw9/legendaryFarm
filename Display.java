@@ -79,6 +79,7 @@ public class Display {
         bg.setBounds(0, 0, 1000, 700);
         layeredPane.add(bg, Integer.valueOf(0));  // layer 0 = bottom
 
+
         try{
             BufferedImage bimg = ImageIO.read(new File(pet.getImage()));
             bimg = resize(bimg, 200, 200);
@@ -131,7 +132,7 @@ public class Display {
 
                 JButton feedButton = createButton("FEED", x, y+280, 200, 20);
                 feedButton.addActionListener(e -> { 
-                    AnswerBox box = new AnswerBox("", pet, this, player.getFood());
+                    AnswerBox box = new AnswerBox("", pet, this, player);
                 });
                 layeredPane.add(feedButton, Integer.valueOf(3));
             }
@@ -147,11 +148,37 @@ public class Display {
         y = 0;
     }
 
+    public void loadMainDisplay() {
+        // Assume we have access to the layered pane
+        JLayeredPane layeredPane = (JLayeredPane) jframe.getContentPane();
+
+        JLabel greet = new JLabel("HELLO, " + player.getName()); 
+        greet.setBounds(700, 20, 100, 20);
+        layeredPane.add(greet, 3);
+        JLabel coins = new JLabel("COINS: " + player.getCoins());
+        coins.setBounds(700, 50, 100, 20);
+        layeredPane.add(coins, 3);
+        JLabel food = new JLabel("AVAILABLE FOOD: " + player.getFood());
+        food.setBounds(700, 70, 300, 20);
+        layeredPane.add(food, 3);
+
+        JButton buyPetButton = new JButton("Buy new pet (100 coins)");
+        buyPetButton.setBounds(700, 120, 200, 50);
+        layeredPane.add(buyPetButton, 3);
+        JButton buyFoodButton = new JButton("Buy Food (2 coins per food)");
+        buyFoodButton.setBounds(700, 170, 200, 50);
+        layeredPane.add(buyFoodButton, 3);
+        JButton createTaskButton = new JButton("CREATE TASK");
+        createTaskButton.setBounds(700, 240, 200, 50);
+        layeredPane.add(createTaskButton, 3);
+    }
+
     public void reloadPetDisplay() {
         // Pet[] holder = petSlots;
         petSlots = new Pet[6];
         
         jframe.getContentPane().removeAll();
+        loadMainDisplay();
         //int counter = 0;
         for (Pet p : player.getPets()) {
             if (p != null) {

@@ -43,6 +43,7 @@ class Player {
     public int getCoins() {return totalCoins;}
     public void modifyCoins(int m) {totalCoins += m;}
     public int getFood() {return availableFood;}
+    public void modifyFood(int m) {availableFood += m;}
     public ArrayList<Pet> getPets() {return pets;}
 
     public void AddTask(Task newTask) {

@@ -32,7 +32,7 @@ public class AnswerBox {
         });
     }
 
-    public AnswerBox(String question, Pet thePet, Display d, int total) { // feed pet
+    public AnswerBox(String question, Pet thePet, Display d, Player player) { // feed pet
         JTextField numberField = new JTextField(question);
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
@@ -48,7 +48,18 @@ public class AnswerBox {
         button.addActionListener(e -> {
             String text = numberField.getText();
 
-            thePet.modifyHunger(Integer.parseInt(text));
+            try {
+                int number = Integer.parseInt(text);
+                if (number <= player.getFood()) {
+                    thePet.modifyHunger(number);
+                    player.modifyFood(-number);
+                } else {
+                    System.out.println("You do not have enough food");
+                }
+            } catch (Exception x) {
+                System.out.println("Please enter a number.");
+            }
+            
 
             // reload pet display
             d.reloadPetDisplay();
