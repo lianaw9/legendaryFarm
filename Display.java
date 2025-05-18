@@ -128,6 +128,12 @@ public class Display {
                     }
                 });
                 layeredPane.add(lvlUpButton, Integer.valueOf(3));
+
+                JButton feedButton = createButton("FEED", x, y+280, 200, 20);
+                feedButton.addActionListener(e -> { 
+                    AnswerBox box = new AnswerBox("", pet, this, player.getFood());
+                });
+                layeredPane.add(feedButton, Integer.valueOf(3));
             }
             
         } catch (Exception e) {

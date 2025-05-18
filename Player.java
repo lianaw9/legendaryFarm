@@ -8,6 +8,7 @@ class Player {
 
     private String name;
     private int totalCoins;
+    private int availableFood;
     private int max = 6; //maximum number of pets
 
     private int timeScale;
@@ -41,6 +42,7 @@ class Player {
     public void setName(String newName) {name = newName;}
     public int getCoins() {return totalCoins;}
     public void modifyCoins(int m) {totalCoins += m;}
+    public int getFood() {return availableFood;}
     public ArrayList<Pet> getPets() {return pets;}
 
     public void AddTask(Task newTask) {

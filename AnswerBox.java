@@ -1,4 +1,6 @@
 // annoyingly needed
+import java.text.NumberFormat;
+
 import javax.swing.*;
 
 public class AnswerBox {
@@ -27,10 +29,33 @@ public class AnswerBox {
 
             holder.setVisible(false);
             holder.dispose();
-
-
         });
-        
+    }
+
+    public AnswerBox(String question, Pet thePet, Display d, int total) { // feed pet
+        JTextField numberField = new JTextField(question);
+        JFrame holder = new JFrame("Text Holder");
+        JButton button = Display.createButton("Submit", 0, 0, 100, 70);
+
+        holder.setLayout(null);
+        holder.setSize(300, 200);
+        numberField.setLocation(0, 100); // Set position
+        numberField.setSize(150, 60); // Set size
+        holder.add(numberField);
+        holder.add(button);
+        holder.setVisible(true);
+
+        button.addActionListener(e -> {
+            String text = numberField.getText();
+
+            thePet.modifyHunger(Integer.parseInt(text));
+
+            // reload pet display
+            d.reloadPetDisplay();
+
+            holder.setVisible(false);
+            holder.dispose();
+        });
     }
 
         public AnswerBox(String question, Task theTask) { // for tasks (i love copy paste hardcoding <3)
@@ -55,5 +80,6 @@ public class AnswerBox {
             holder.dispose();
         });
         
+
     }
 }
