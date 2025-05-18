@@ -59,19 +59,29 @@ public class Display {
     public void initPetDisplay() {
         jframe = new JFrame("PetInfo");
         jframe.setLayout(null);
-        jframe.setSize(700, 700);
-        jframe.setVisible(true);
+        jframe.setSize(1000, 700);
+
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, 1000, 700);
+        jframe.setContentPane(layeredPane);
     }
 
     /*PRECONDITION:  */
     public void loadPetDisplay(Pet pet) {
-        boolean canLoad = false;
+        boolean canLoad = false; //checks if there is empty space in petslots
         int x = 0;
         int y = 0;
+
+        // Assume we have access to the layered pane
+        JLayeredPane layeredPane = (JLayeredPane) jframe.getContentPane();
+
+        JLabel bg = new JLabel(new ImageIcon("img/background.png"));
+        bg.setBounds(0, 0, 1000, 700);
+        layeredPane.add(bg, Integer.valueOf(0));  // layer 0 = bottom
+
         try{
             BufferedImage bimg = ImageIO.read(new File(pet.getImage()));
             bimg = resize(bimg, 200, 200);
-            System.out.println("HELLO");
 
             //jframe.setDefaultCloseOperation(
             //    JFrame.EXIT_ON_CLOSE);
@@ -84,37 +94,40 @@ public class Display {
                     break;
                 } 
             }
-            System.out.println(x + " " + y);
+            //System.out.println(x + " " + y);
             
             if (canLoad) {
                 JLabel petImg = new JLabel();
                 petImg.setIcon(new ImageIcon(bimg)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
                 petImg.setBounds(x, y, 200, 200);
-                jframe.add(petImg);
+                layeredPane.add(petImg, Integer.valueOf(1));
 
                 for (int i=0; i<pet.infoArray().length; i++) {
                     //System.out.println(pet.infoArray()[i]);
                     JLabel petInfo = new JLabel(pet.infoArray()[i]);
                     petInfo.setBounds(x, y+100+i*10, 200, 200);
-                    jframe.add(petInfo);
+                    layeredPane.add(petInfo, Integer.valueOf(2)); // higher layer
                 }
                 JButton nameButton = createButton("Change Name", x, y+260, 100, 20);
                 nameButton.addActionListener(e -> { // set to new name
                     AnswerBox box = new AnswerBox(" ", pet, this); 
                 });
-                jframe.add(nameButton);
+                layeredPane.add(nameButton, Integer.valueOf(3));
 
                 JButton lvlUpButton = createButton("Level Up", x+100, y+260, 100, 20);
                 lvlUpButton.addActionListener(e -> { 
                     if (player.getCoins() >= 30) {
                         pet.levelUp();
                         player.modifyCoins(-30);
+                        if (pet.getLevel() == 10) {
+                            player.removeGraduate(pet);
+                        }
                         reloadPetDisplay();
                     } else {
                         System.out.println("Sorry, you need 30 coins to level up " + pet.getName() + "!");
                     }
                 });
-                jframe.add(lvlUpButton);
+                layeredPane.add(lvlUpButton, Integer.valueOf(3));
             }
             
         } catch (Exception e) {
@@ -129,14 +142,15 @@ public class Display {
     }
 
     public void reloadPetDisplay() {
-        Pet[] holder = petSlots;
+        // Pet[] holder = petSlots;
         petSlots = new Pet[6];
         
         jframe.getContentPane().removeAll();
-        int counter = 0;
-        for (Pet p : holder) {
-            loadPetDisplay(p);
-            counter++;
+        //int counter = 0;
+        for (Pet p : player.getPets()) {
+            if (p != null) {
+                loadPetDisplay(p);
+            }
         }
     }
 

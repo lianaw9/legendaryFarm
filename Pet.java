@@ -65,6 +65,7 @@ public class Pet {
     public String getName() {return name;}
     public boolean isAlive() {return alive;}
     public void setName(String n) {name = n;}
+    public int getLevel() {return level;}
     
 
     public void modifyHunger(int n) {
