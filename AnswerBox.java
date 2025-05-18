@@ -3,7 +3,7 @@ import javax.swing.*;
 
 public class AnswerBox {
 
-    public AnswerBox(String question, Pet thePet) { // we take a Pet argument so we can edit it's name when the button is closed
+    public AnswerBox(String question, Pet thePet, Display d) { // we take a Pet argument so we can edit it's name when the button is closed
         JTextField textField = new JTextField(question);
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
@@ -23,7 +23,7 @@ public class AnswerBox {
             thePet.setName(text); // set the pets name when submit is clicked
 
             // reload pet display
-            Display.reloadPetDisplay();
+            d.reloadPetDisplay();
 
             holder.setVisible(false);
             holder.dispose();

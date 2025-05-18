@@ -37,6 +37,8 @@ class Player {
     }
     public String getName() {return name;}
     public void setName(String newName) {name = newName;}
+    public int getCoins() {return totalCoins;}
+    public void modifyCoins(int m) {totalCoins += m;}
     public ArrayList<Pet> getPets() {return pets;}
 
     public void AddTask(Task newTask) {

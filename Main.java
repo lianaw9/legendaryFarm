@@ -2,6 +2,8 @@
 public class Main {
     public static void main(String[] args) {
         Player player = new Player();
+        Display d = new Display(player);
+
         player.setName("John");
         player.AddPet(new Pet(player.getName()));
         player.AddPet(new Pet(player.getName()));
@@ -10,11 +12,11 @@ public class Main {
         // player.AddPet(new Pet(player.getName()));
         // player.AddPet(new Pet(player.getName()));
 
-        Display.initPetDisplay();
-        //Display.test();
-        System.out.println(player.getPets().size());
+        player.modifyCoins(300);
+
+        d.initPetDisplay();
         for (Pet p : player.getPets()) {
-            Display.loadPetDisplay(p);
+            d.loadPetDisplay(p);
         }
 
         //Display.initMainDisplay();

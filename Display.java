@@ -5,17 +5,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Display {
-    public static void main(String[] args) {
-        // JFrame jframe = new JFrame("Image");
-        // //jframe.setLayout(new BorderLayout());
-        // jframe.setSize(600, 500);
-        // //jframe.setDefaultCloseOperation(
-        // //    JFrame.EXIT_ON_CLOSE);
-        // jframe.add(loadImage("img/pet/Cat1.jpg"));
-        // jframe.add(loadImage("img/pet/Cat2.jpg"));
-
-        // jframe.setVisible(true);
+    private Player player;
+    public Display(Player p) {
+        player = p; 
     }
+
     public static JLabel loadImage(String fileName) {
         BufferedImage image;
         JLabel imageContainer;
@@ -62,7 +56,7 @@ public class Display {
     private static int[][] slots = {{0, 0}, {220, 0}, {440, 0}, {0, 300}, {220, 300}, {440, 300}};
     private static Pet[] petSlots = new Pet[6];
 
-    public static void initPetDisplay() {
+    public void initPetDisplay() {
         jframe = new JFrame("PetInfo");
         jframe.setLayout(null);
         jframe.setSize(700, 700);
@@ -70,7 +64,7 @@ public class Display {
     }
 
     /*PRECONDITION:  */
-    public static void loadPetDisplay(Pet pet) {
+    public void loadPetDisplay(Pet pet) {
         boolean canLoad = false;
         int x = 0;
         int y = 0;
@@ -99,16 +93,28 @@ public class Display {
                 jframe.add(petImg);
 
                 for (int i=0; i<pet.infoArray().length; i++) {
-                    System.out.println(pet.infoArray()[i]);
+                    //System.out.println(pet.infoArray()[i]);
                     JLabel petInfo = new JLabel(pet.infoArray()[i]);
                     petInfo.setBounds(x, y+100+i*10, 200, 200);
                     jframe.add(petInfo);
                 }
-                JButton button = createButton("Change Name", x, y+260, 200, 20);
-                button.addActionListener(e -> { // set to new name
-                    AnswerBox box = new AnswerBox(" ", pet);  
+                JButton nameButton = createButton("Change Name", x, y+260, 100, 20);
+                nameButton.addActionListener(e -> { // set to new name
+                    AnswerBox box = new AnswerBox(" ", pet, this); 
                 });
-                jframe.add(button);
+                jframe.add(nameButton);
+
+                JButton lvlUpButton = createButton("Level Up", x+100, y+260, 100, 20);
+                lvlUpButton.addActionListener(e -> { 
+                    if (player.getCoins() >= 30) {
+                        pet.levelUp();
+                        player.modifyCoins(-30);
+                        reloadPetDisplay();
+                    } else {
+                        System.out.println("Sorry, you need 30 coins to level up " + pet.getName() + "!");
+                    }
+                });
+                jframe.add(lvlUpButton);
             }
             
         } catch (Exception e) {
@@ -122,7 +128,7 @@ public class Display {
         y = 0;
     }
 
-    public static void reloadPetDisplay() {
+    public void reloadPetDisplay() {
         Pet[] holder = petSlots;
         petSlots = new Pet[6];
         
@@ -134,20 +140,6 @@ public class Display {
         }
     }
 
-    public static void test() {
-        try {
-            BufferedImage img = ImageIO.read(new File("img/playerpets/placeholder.png"));
-            JLabel petImg = new JLabel();
-            petImg.setIcon(new ImageIcon(img)); //Ok i added this so that petImg is the bimg that was set up earlier -LIANA
-            petImg.setBounds(220, 0, 200, 200);
-            jframe.add(petImg);
-            jframe.setVisible(true);
-            
-        } catch (Exception e) {
-            System.out.println("EROR");
-        }
-        
-    }
     //bro i 100% just copy and paste from gogle ai 
     private static BufferedImage resize(BufferedImage og, int w, int h) {
         BufferedImage resizedImage = new BufferedImage(w, h, og.getType());
