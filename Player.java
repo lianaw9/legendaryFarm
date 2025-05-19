@@ -71,11 +71,15 @@ class Player {
     public void AddPet(Pet newPet) {
         if (pets.size() < max) {
             pets.add(newPet);
+            
+            System.out.println("CURRENT TIME: " + GetTimeScale());
+            System.out.println("NEW PET OBTAINED!!");
+            System.out.println(newPet);
         }
     }
 
     public void removeGraduate(Pet p) {
-        System.out.println("INDEX" + pets.indexOf(p));
+        //System.out.println("INDEX" + pets.indexOf(p));
         graduates.add(pets.remove(pets.indexOf(p)));
     }
 

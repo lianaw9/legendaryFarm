@@ -21,7 +21,6 @@ public class Pet {
     private String name;
     private int level; //upgrade over time -> demo will upgrade manually
     private int hunger; 
-    private boolean graduated = false;
     private boolean alive = true;
 
     private static int petNum = 0; //keeps track of total number of ppets
@@ -89,11 +88,13 @@ public class Pet {
     public void levelUp() {
         if (alive) {
             level++;
-            if (level == 5 || level == 10) {
-                graduated = occupation.promotion();
-                System.out.println(name + " is now a " + occupation.getJobTitle());
-                if (graduated) {
+            if (level == 5 || level >= 10) {
+                occupation.promotion();
+                System.out.println(name + " is now a " + occupation.getJobTitle() + ". ");
+                if (level > 10) {
                     System.out.println("Congratulations! " + name + " has graduated!");
+                } else if (level == 10) {
+                    System.out.println("Level up one more time to graduate!");
                 }
             }
         }

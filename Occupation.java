@@ -25,9 +25,10 @@ public class Occupation {
         if (jobTitle.equals("Orphan")) {
             jobTitle = job[1];
             return false;
-        } else {
+        } else if (jobTitle.equals(job[1])) {
             jobTitle = job[0];
-            return true;
-        }
+            return false;
+        } 
+        return true;
     }
 }
