@@ -60,6 +60,10 @@ public class AnswerBox {
                 System.out.println("Please enter a number.");
             }
             
+            // if (!thePet.isAlive()) {
+            //     player.removeDead(thePet);
+            // }
+            
 
             // reload pet display
             d.reloadPetDisplay();

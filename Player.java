@@ -4,6 +4,7 @@ import java.util.Scanner;
 class Player {
     private ArrayList<Pet> pets;
     private ArrayList<Pet> graduates;
+    private ArrayList<Pet> deaths;
     private ArrayList<Task> tasks;
 
     private String name;
@@ -19,6 +20,7 @@ class Player {
         pets = new ArrayList<Pet>();
         tasks = new ArrayList<Task>();
         graduates = new ArrayList<Pet>();
+        deaths = new ArrayList<Pet>();
 
         name = "Player 1";
         totalCoins = 0;
@@ -75,6 +77,10 @@ class Player {
     public void removeGraduate(Pet p) {
         System.out.println("INDEX" + pets.indexOf(p));
         graduates.add(pets.remove(pets.indexOf(p)));
+    }
+
+    public void removeDead(Pet p) {
+        deaths.add(pets.remove(pets.indexOf(p)));
     }
 
     public void IncrementTimeScale() {

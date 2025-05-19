@@ -109,13 +109,13 @@ public class Display {
                     petInfo.setBounds(x, y+100+i*10, 200, 200);
                     layeredPane.add(petInfo, Integer.valueOf(2)); // higher layer
                 }
-                JButton nameButton = createButton("Change Name", x, y+260, 100, 20);
+                JButton nameButton = createButton("Rename", x, y+260, 100, 20);
                 nameButton.addActionListener(e -> { // set to new name
                     AnswerBox box = new AnswerBox(" ", pet, this); 
                 });
                 layeredPane.add(nameButton, Integer.valueOf(3));
 
-                JButton lvlUpButton = createButton("Level Up", x+100, y+260, 100, 20);
+                JButton lvlUpButton = createButton("Level Up (30 coins)", x, y+280, 200, 20);
                 lvlUpButton.addActionListener(e -> { 
                     if (player.getCoins() >= 30) {
                         pet.levelUp();
@@ -130,7 +130,7 @@ public class Display {
                 });
                 layeredPane.add(lvlUpButton, Integer.valueOf(3));
 
-                JButton feedButton = createButton("FEED", x, y+280, 200, 20);
+                JButton feedButton = createButton("FEED", x+100, y+260, 100, 20);
                 feedButton.addActionListener(e -> { 
                     AnswerBox box = new AnswerBox("", pet, this, player);
                 });
@@ -164,12 +164,23 @@ public class Display {
 
         JButton buyPetButton = new JButton("Buy new pet (100 coins)");
         buyPetButton.setBounds(700, 120, 200, 50);
+        buyPetButton.addActionListener(e -> {
+           //System.out.println("create task clicked");
+            player.AddPet(new Pet(player.getName()));
+            reloadPetDisplay();
+        }); 
         layeredPane.add(buyPetButton, 3);
+
         JButton buyFoodButton = new JButton("Buy Food (2 coins per food)");
         buyFoodButton.setBounds(700, 170, 200, 50);
         layeredPane.add(buyFoodButton, 3);
+
         JButton createTaskButton = new JButton("CREATE TASK");
         createTaskButton.setBounds(700, 240, 200, 50);
+        createTaskButton.addActionListener(e -> {
+           //System.out.println("create task clicked");
+            AnswerBox box = new AnswerBox("Task name?", new Task());
+        }); 
         layeredPane.add(createTaskButton, 3);
     }
 
@@ -178,6 +189,18 @@ public class Display {
         petSlots = new Pet[6];
         
         jframe.getContentPane().removeAll();
+        
+        //update so if any pets die they get deleetd
+        for (int i=player.getPets().size()-1; i>=0; i--) {
+            Pet current = player.getPets().get(i);
+            System.out.println(i);
+            System.out.println(current.isAlive());
+            if (!current.isAlive()) {
+                player.removeDead(current);
+                System.out.println("Removed dead" );
+            }
+        }
+        System.out.println(player.getPets().size()-1);
         loadMainDisplay();
         //int counter = 0;
         for (Pet p : player.getPets()) {
