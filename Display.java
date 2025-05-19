@@ -257,6 +257,18 @@ public class Display implements ActionListener{
             System.out.println("*****END*****");
         });
         layeredPane.add(listGrads);
+
+        JButton listDeaths = new JButton("CEMETERY");
+        listDeaths.setBounds(700, 480, 200, 20);
+        listDeaths.addActionListener(e -> {
+            System.out.println("****RIP****");
+            for (Pet g: player.getDeaths()) {
+                System.out.println(g);
+                System.out.println();
+            }
+            System.out.println("*****END*****");
+        });
+        layeredPane.add(listDeaths);
     }
 
     public void reloadPetDisplay() {

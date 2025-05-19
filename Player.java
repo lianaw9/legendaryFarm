@@ -49,6 +49,7 @@ class Player {
     public ArrayList<Task> getTasks() {return tasks;}
     public ArrayList<Pet> getPets() {return pets;}
     public ArrayList<Pet> getGraduates() {return graduates;}
+    public ArrayList<Pet> getDeaths() {return deaths;}
 
     public void AddTask(Task newTask) {
         tasks.add(newTask);
