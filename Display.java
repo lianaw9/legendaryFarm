@@ -4,11 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 //timer stuff
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -28,7 +26,8 @@ public class Display implements ActionListener{
         //System.out.println("Seconds passed: " + player.GetTimeScale());
         int random = (int)(Math.random()*10);
         //System.out.println("RANDOM: " + random);
-        if (random == 1) {
+        if (random == 1 && player.getTasks().size() > 0) {
+            System.out.println("CURRENT TIME: " + player.GetTimeScale());
             System.out.println("NEW TASK OBTAINED!");
             giveTask();
         }
@@ -204,23 +203,60 @@ public class Display implements ActionListener{
         }); 
         layeredPane.add(buyPetButton, 3);
 
-        JButton buyFoodButton = new JButton("Buy Food (2 coins per food)");
+        JButton buyFoodButton = new JButton("Buy Food (10 food for 5 coins)");
         buyFoodButton.setBounds(700, 170, 200, 50);
+        buyFoodButton.addActionListener(e -> {
+            if (player.getCoins() >= 5) {
+                player.modifyCoins(-5);
+                player.modifyFood(10);
+            }
+            
+            //reloadPetDisplay();
+        }); 
         layeredPane.add(buyFoodButton, 3);
 
         JButton createTaskButton = new JButton("CREATE TASK");
         createTaskButton.setBounds(700, 240, 200, 50);
         createTaskButton.addActionListener(e -> {
-            AnswerBox box = new AnswerBox("Task name?", new Task(), this);
+            AnswerBox box = new AnswerBox("Task name?", new Task(), this, player);
         }); 
         layeredPane.add(createTaskButton, 3);
 
-        JButton getTask = new JButton("get task");
+        JButton getTask = new JButton("GET RANDOM TASK");
         getTask.setBounds(700, 300, 200, 50);
         getTask.addActionListener(e -> {
-            giveTask();
+            if (player.getTasks().size() > 0) {
+                giveTask();
+            } else {
+                System.out.println("You have already finished all of your tasks!");
+            }
+            
         });
         layeredPane.add(getTask);
+
+        JButton displayTasks = new JButton("SHOW REMAINING TASKS");
+        displayTasks.setBounds(700, 360, 200, 50);
+        displayTasks.addActionListener(e -> {
+            System.out.println("---REMAINING TASKS---");
+            for (Task t: player.getTasks()) {
+                System.out.println(t);
+                System.out.println();
+            }
+            System.out.println("-----END-----");
+        });
+        layeredPane.add(displayTasks);
+
+        JButton listGrads = new JButton("LIST GRADUATES");
+        listGrads.setBounds(700, 450, 200, 20);
+        listGrads.addActionListener(e -> {
+            System.out.println("****GRADUATES****");
+            for (Pet g: player.getGraduates()) {
+                System.out.println(g);
+                System.out.println();
+            }
+            System.out.println("*****END*****");
+        });
+        layeredPane.add(listGrads);
     }
 
     public void reloadPetDisplay() {
@@ -318,6 +354,7 @@ public class Display implements ActionListener{
             player.modifyCoins(t.GetCoinAmount());
             player.modifyFood(t.GetFoodAmount());
 
+            player.SetCompletedTasks(t);
             reloadPetDisplay();
 
             task.setVisible(false);
@@ -338,5 +375,4 @@ public class Display implements ActionListener{
         task.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         task.setVisible(true);
     }
-
 }

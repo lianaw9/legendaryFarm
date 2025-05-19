@@ -19,7 +19,6 @@ public class AnswerBox{
         holder.setVisible(true);
 
         button.addActionListener(e -> {
-            System.out.println("button clicked");
             String text = textField.getText();
 
             thePet.setName(text); // set the pets name when submit is clicked
@@ -73,9 +72,10 @@ public class AnswerBox{
         });
     }
 
-        public AnswerBox(String question, Task theTask, Display d) { // for tasks (i love copy paste hardcoding <3)
+        public AnswerBox(String question, Task theTask, Display d, Player p) { // for tasks (i love copy paste hardcoding <3)
         d.stopTimer();
         JTextField textField = new JTextField(question);
+        JTextField descriptionField = new JTextField("Enter description");
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
 
@@ -83,15 +83,21 @@ public class AnswerBox{
         holder.setSize(300, 200);
         textField.setLocation(0, 100); // Set position
         textField.setSize(150, 60); // Set size
+        descriptionField.setLocation(150, 100); // Set position
+        descriptionField.setSize(150, 60); // Set size
         holder.add(textField);
         holder.add(button);
+        holder.add(descriptionField);
         holder.setVisible(true);
 
         button.addActionListener(e -> {
             System.out.println("button clicked");
             String text = textField.getText();
+            String description = descriptionField.getText();
 
             //do something to create the task here
+            Task newTask = new Task(text, description, (int)(Math.random() * 50) + 1, (int)(Math.random() * 200) + 1);
+            p.AddTask(newTask);
 
             d.startTimer();
             holder.setVisible(false);

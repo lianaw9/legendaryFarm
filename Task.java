@@ -56,4 +56,13 @@ public class Task {
         return false;
     }
 
+    @Override 
+    public String toString() {
+        String output = "TASK NAME: " + taskName + "\n";
+        output+= "DESCRIPTION: " + taskDescription + "\n";
+        output+= "COIN AMOUNT: " + coinAmount + "\n";
+        output+= "FOOD AMOUNT: " + foodAmount;
+        return output;
+    }
+
 }

@@ -108,7 +108,7 @@ public class Pet {
         s+= "Level: " + level + "\n";
         s+= "Hunger: " + hunger + "\n";
         s+= "Alive: " + alive + "\n";
-        s+= "-----\n";
+        s+= "-----";
 
         return s;
 

@@ -5,12 +5,8 @@ public class Main {
         Display d = new Display(player);
 
         player.setName("John");
-        //player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
-        // player.AddPet(new Pet(player.getName()));
+        player.AddPet(new Pet(player.getName()));
+
 
         player.modifyCoins(300);
 
@@ -23,15 +19,6 @@ public class Main {
         player.AddTask(task1);
 
         d.initPetDisplay();
-        
-
-        //Display.initMainDisplay();
-
-        // player.AddPet(pet1);
-        // player.AddPet(pet2);
-
-        
-
         // for (int i=1; i<=100; i++) {
         //     player.IncrementTimeScale();
         //     System.out.println(player.GetTimeScale());

@@ -46,7 +46,9 @@ class Player {
     public void modifyCoins(int m) {totalCoins += m;}
     public int getFood() {return availableFood;}
     public void modifyFood(int m) {availableFood += m;}
+    public ArrayList<Task> getTasks() {return tasks;}
     public ArrayList<Pet> getPets() {return pets;}
+    public ArrayList<Pet> getGraduates() {return graduates;}
 
     public void AddTask(Task newTask) {
         tasks.add(newTask);
