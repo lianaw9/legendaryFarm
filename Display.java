@@ -26,7 +26,7 @@ public class Display implements ActionListener{
         player.IncrementTimeScale();
         reloadPetDisplay();
         //System.out.println("Seconds passed: " + player.GetTimeScale());
-        int random = (int)(Math.random()*5);
+        int random = (int)(Math.random()*10);
         //System.out.println("RANDOM: " + random);
         if (random == 1) {
             System.out.println("NEW TASK OBTAINED!");
