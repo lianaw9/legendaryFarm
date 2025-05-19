@@ -1,13 +1,37 @@
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Display {
+//timer stuff
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class Display implements ActionListener{
     private Player player;
+    private Timer timer;
+
     public Display(Player p) {
         player = p; 
+        timer = new Timer(1000, this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // your code here
+        player.IncrementTimeScale();
+        System.out.println(player.GetTimeScale());
+        reloadPetDisplay();
+    }
+    public void startTimer() {
+        timer.start();
+    }
+    public void stopTimer() {
+        timer.stop();
     }
 
     public static JLabel loadImage(String fileName) {
@@ -24,31 +48,6 @@ public class Display {
         }
     }
 
-    public static void initMainDisplay() {
-        JFrame frame = new JFrame("Main Display");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 700);
-        frame.setLayout(null);
-
-        // create buttons
-        JButton buyPet = createButton("buy a pet", 10, 10, 100, 200);
-        JButton createTask = createButton("create task", 100, 100, 200, 400);     
-        frame.add(buyPet);
-        frame.add(createTask);
-
-        // listeners
-        buyPet.addActionListener(e -> {
-            System.out.println("buy pet clicked");
-        });
-        createTask.addActionListener(e -> {
-            System.out.println("create task clicked");
-            AnswerBox box = new AnswerBox("Task name?", new Task());
-        });
-
-        frame.setVisible(true);
-
-    }
-
     //SORRY I was messing around with this method since i added some sprites -LIANA
     private static JFrame jframe;
     
@@ -61,9 +60,28 @@ public class Display {
         jframe.setLayout(null);
         jframe.setSize(1000, 700);
 
+        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setBounds(0, 0, 1000, 700);
         jframe.setContentPane(layeredPane);
+
+        loadMainDisplay();
+        for (Pet p : player.getPets()) {
+            loadPetDisplay(p);
+        }
+        timer.start();
+
+         // Stop the timer when the window is closed - I copy adn pasted this chatgpt
+        jframe.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                if (timer.isRunning()) {
+                    timer.stop();
+                    System.out.println("Timer stopped because window closed");
+                }
+            }
+        });
     }
 
     /*PRECONDITION:  */
@@ -165,8 +183,11 @@ public class Display {
         JButton buyPetButton = new JButton("Buy new pet (100 coins)");
         buyPetButton.setBounds(700, 120, 200, 50);
         buyPetButton.addActionListener(e -> {
-           //System.out.println("create task clicked");
-            player.AddPet(new Pet(player.getName()));
+            if (player.getCoins() >= 100) {
+                player.AddPet(new Pet(player.getName()));
+                player.modifyCoins(-100);
+            }
+            
             reloadPetDisplay();
         }); 
         layeredPane.add(buyPetButton, 3);
@@ -178,8 +199,7 @@ public class Display {
         JButton createTaskButton = new JButton("CREATE TASK");
         createTaskButton.setBounds(700, 240, 200, 50);
         createTaskButton.addActionListener(e -> {
-           //System.out.println("create task clicked");
-            AnswerBox box = new AnswerBox("Task name?", new Task());
+            AnswerBox box = new AnswerBox("Task name?", new Task(), this);
         }); 
         layeredPane.add(createTaskButton, 3);
     }
@@ -197,23 +217,11 @@ public class Display {
                 player.removeDead(current);
             }
         }
-        System.out.println(player.getPets().size()-1);
         loadMainDisplay();
         //int counter = 0;
         for (Pet p : player.getPets()) {
             if (p != null) {
                 loadPetDisplay(p);
-            }
-        }
-        
-        System.out.println("***");
-        System.out.println("TIME: " + player.GetTimeScale());
-        int slot = 0;
-        for (Pet p : petSlots) {
-            if (p != null) {
-                System.out.println("Slot #" + slot);
-                System.out.println(p);
-                slot++;
             }
         }
     }
@@ -247,5 +255,17 @@ public class Display {
         return petSlots;
     }
 
+    public void printInfo() {
+        System.out.println("***");
+        System.out.println("TIME: " + player.GetTimeScale());
+        int slot = 0;
+        for (Pet p : petSlots) {
+            if (p != null) {
+                System.out.println("Slot #" + slot);
+                System.out.println(p);
+                slot++;
+            }
+        }
+    }
 
 }

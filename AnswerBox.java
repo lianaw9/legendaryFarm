@@ -1,9 +1,11 @@
 // annoyingly needed
 import javax.swing.*;
 
-public class AnswerBox {
+public class AnswerBox{
 
     public AnswerBox(String question, Pet thePet, Display d) { // we take a Pet argument so we can edit it's name when the button is closed
+        d.stopTimer();
+
         JTextField textField = new JTextField(question);
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
@@ -25,12 +27,15 @@ public class AnswerBox {
             // reload pet display
             d.reloadPetDisplay();
 
+            d.startTimer();
+
             holder.setVisible(false);
             holder.dispose();
         });
     }
 
     public AnswerBox(String question, Pet thePet, Display d, Player player) { // feed pet
+        d.stopTimer();
         JTextField numberField = new JTextField(question);
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
@@ -61,12 +66,15 @@ public class AnswerBox {
             // reload pet display
             d.reloadPetDisplay();
 
+            d.startTimer();
+
             holder.setVisible(false);
             holder.dispose();
         });
     }
 
-        public AnswerBox(String question, Task theTask) { // for tasks (i love copy paste hardcoding <3)
+        public AnswerBox(String question, Task theTask, Display d) { // for tasks (i love copy paste hardcoding <3)
+        d.stopTimer();
         JTextField textField = new JTextField(question);
         JFrame holder = new JFrame("Text Holder");
         JButton button = Display.createButton("Submit", 0, 0, 100, 70);
@@ -84,6 +92,8 @@ public class AnswerBox {
             String text = textField.getText();
 
             //do something to create the task here
+
+            d.startTimer();
             holder.setVisible(false);
             holder.dispose();
         });

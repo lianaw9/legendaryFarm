@@ -13,7 +13,7 @@ class Player {
     private int max = 6; //maximum number of pets
 
     private int timeScale;
-    private int updateHungerScale = 5;
+    private int updateHungerScale = 10;
     
     
     public Player() {
@@ -85,6 +85,7 @@ class Player {
 
     public void IncrementTimeScale() {
         timeScale++;
+        UpdatePetHunger(-10);
     }
 
     public int GetTimeScale() {
@@ -95,7 +96,7 @@ class Player {
         if (GetTimeScale() % updateHungerScale == 0) {
             for (int i = 0; i < pets.size(); i++) {
                 pets.get(i).modifyHunger(foodDelta);
-                System.out.println(pets.get(i));
+                //System.out.println(pets.get(i));
             }
         }
     }
@@ -105,7 +106,7 @@ class Player {
         for(int i = 0; i < pets.size(); i++) {
             if(pets.get(i).getName().equals(chosenPet)) {
                 pets.get(i).modifyHunger(foodDelta);
-                System.out.println(pets.get(i));
+                //System.out.println(pets.get(i));
                 petExists = true;
             }
         }

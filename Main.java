@@ -15,10 +15,7 @@ public class Main {
         player.modifyCoins(300);
 
         d.initPetDisplay();
-        d.loadMainDisplay();
-        for (Pet p : player.getPets()) {
-            d.loadPetDisplay(p);
-        }
+        
 
         //Display.initMainDisplay();
 
