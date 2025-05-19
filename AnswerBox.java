@@ -1,6 +1,4 @@
 // annoyingly needed
-import java.text.NumberFormat;
-
 import javax.swing.*;
 
 public class AnswerBox {
@@ -60,11 +58,6 @@ public class AnswerBox {
                 System.out.println("Please enter a number.");
             }
             
-            // if (!thePet.isAlive()) {
-            //     player.removeDead(thePet);
-            // }
-            
-
             // reload pet display
             d.reloadPetDisplay();
 

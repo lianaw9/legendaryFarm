@@ -193,11 +193,8 @@ public class Display {
         //update so if any pets die they get deleetd
         for (int i=player.getPets().size()-1; i>=0; i--) {
             Pet current = player.getPets().get(i);
-            System.out.println(i);
-            System.out.println(current.isAlive());
             if (!current.isAlive()) {
                 player.removeDead(current);
-                System.out.println("Removed dead" );
             }
         }
         System.out.println(player.getPets().size()-1);
@@ -206,6 +203,17 @@ public class Display {
         for (Pet p : player.getPets()) {
             if (p != null) {
                 loadPetDisplay(p);
+            }
+        }
+        
+        System.out.println("***");
+        System.out.println("TIME: " + player.GetTimeScale());
+        int slot = 0;
+        for (Pet p : petSlots) {
+            if (p != null) {
+                System.out.println("Slot #" + slot);
+                System.out.println(p);
+                slot++;
             }
         }
     }
